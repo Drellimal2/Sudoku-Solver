@@ -59,7 +59,7 @@ def fill(row, col, board):
     row_set = get_row_vals(row, board)
     col_set = get_col_vals(col, board)
     square_set = get_square_vals(row, col, board)
-
+    board[row][col] = set(range(1, 10))
     board[row][col] -= row_set
     board[row][col] -= col_set
     board[row][col] -= square_set
@@ -159,13 +159,15 @@ def fix_square_num(num, board, val):
 if __name__  == "__main__":
     board, unsolved = get_board()
     print_board(board)
-    for _ in range(5):
+    for _ in range(20):
         solved = set([])
         for pos in unsolved:
             if fill(pos[0], pos[1], board):
                 solved.add(pos)
                 fix_all(pos[0], pos[1], board, board[pos[0]][pos[1]])
         unsolved -= solved
+        if len(unsolved) == 0:
+            break
         for i in range(SIZE):
             
             fill_row(i, board)
@@ -176,6 +178,8 @@ if __name__  == "__main__":
 
     print("  +=========+  ")
     print_board(board)
+    print("  -=========-  ")
+    dirty_print(board)
 
 
 
